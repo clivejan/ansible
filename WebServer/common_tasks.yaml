@@ -56,3 +56,7 @@
         state: started
         enabled: True
       become: True
+    - name: Ensure the hostname is the same of the inventory
+      hostname:
+        name: "{{ inventory_hostname }}"
+      become: True
