@@ -22,3 +22,20 @@
         name: libsemanage-python
         state: present
       become: True
+    - name: Ensure the timezone is set to Toronto
+      file:
+        src: /usr/share/zoneinfo/America/Toronto
+        dest: /etc/localtime
+        state: link
+      become: True
+    - name: Ensure NTP is installed
+      yum:
+        name: chrony
+        state: present
+      become: True
+    - name: Ensure the NTP service is running and enabled
+      service:
+        name: chronyd
+        state: started
+        enabled: True
+      become: True
