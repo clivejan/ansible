@@ -60,3 +60,11 @@
       hostname:
         name: "{{ inventory_hostname }}"
       become: True
+    - name: Ensure the MOTD file is present and updated
+      template:
+        src: motd.template
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: 0644
+      become: True
