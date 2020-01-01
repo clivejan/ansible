@@ -7,3 +7,18 @@
         name: "*"
         state: latest
       become: True
+    - name: Ensure EPEL is enabled
+      yum:
+        name: epel-release
+        state: present
+      become: True
+    - name: Ensure libselinux-python is present
+      yum:
+        name: libselinux-python
+        state: present
+      become: True
+    - name: Ensure libsemanage-python is present
+      yum:
+        name: libsemanage-python
+        state: present
+      become: True
