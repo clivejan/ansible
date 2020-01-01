@@ -1,0 +1,9 @@
+---
+- hosts: all
+  remote_user: ansible
+  tasks:
+    - name: Ensure we have last version of every package
+      yum:
+        name: "*"
+        state: latest
+      become: True
