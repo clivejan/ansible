@@ -39,3 +39,20 @@
         state: started
         enabled: True
       become: True
+    - name : Ensure Firewalld is installed
+      yum:
+        name: firewalld
+        state: present
+      become: True
+    - name: Ensure SSH can pass the firewall
+      firewalld:
+        service: ssh
+        state: enabled
+        permanent: True
+      become: True
+    - name: Ensure Firewalld is running
+      service:
+        name: firewalld
+        state: started
+        enabled: True
+      become: True
