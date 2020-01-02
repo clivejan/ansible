@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: webserver
   remote_user: ansible
   tasks:
     - name: ensure the HTTPd package is installed
