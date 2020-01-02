@@ -1,5 +1,8 @@
 [webserver]
 web[01:02].clivetw.club
 
+[webserver_debian]
+web03.clivetw.club
+
 [database]
 db01.clivetw.club
