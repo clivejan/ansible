@@ -23,3 +23,15 @@
       with_items:
         - http
         - https
+    - name: Ensure HTTPd configuration is updated
+      copy:
+        src: website.conf
+        dest: /etc/httpd/conf.d
+      become: True
+      notify: Restart HTTPd
+  handlers:
+    - name: Restart HTTPd
+      service:
+        name: httpd
+        state: restarted
+      become: True
