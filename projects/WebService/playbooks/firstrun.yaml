@@ -1,0 +1,25 @@
+---
+- hosts: all
+  user: vagrant
+  tasks:
+    - name: Ensure ansible user exists
+      user:
+        name: ansible
+        state: present
+        comment: Ansible
+      become: True
+    - name: Ensure ansile user accepts the SSH key
+      authorized_key:       
+        user: ansible
+        key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+        state: present
+      become: True
+    - name: Ensure the ansible user is sudoer with no password required
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^ansible ALL\='
+        # if regexp not found, the line will be appended at the end of the file
+        line: 'ansible ALL=(ALL) NOPASSWD:ALL'
+        validate: 'visudo -cf %s'
+      become: True 
