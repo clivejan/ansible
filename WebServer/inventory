@@ -1,5 +1,6 @@
 [webserver]
-web[01:02].clivetw.club
+web01.clivetw.club admin=clive
+web02.clivetw.club admin=chihwei
 
 [database]
 db01.clivetw.club
