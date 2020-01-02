@@ -1,5 +1,6 @@
 <html>
 	<body>
 		<h1>Hello World!</h1>
+		<p>This page was create on {{ ansible_date_time.date }}.</p>
 	</body>
 </html>
