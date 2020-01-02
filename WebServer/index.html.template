@@ -2,5 +2,8 @@
 	<body>
 		<h1>Hello World!</h1>
 		<p>This page was create on {{ ansible_date_time.date }}.</p>
+{% if ansible_eth0.active == True %}
+	<p>eth0 address {{ ansible_eth0.ipv4.address }}.</p>
+{% endif %}
 	</body>
 </html>
