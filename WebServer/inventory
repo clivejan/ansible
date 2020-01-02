@@ -1,6 +1,5 @@
 [webserver]
-web01.clivetw.club
-web02.clivetw.club
+web[01:02].clivetw.club
 
 [database]
 db01.clivetw.club
