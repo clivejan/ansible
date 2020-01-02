@@ -1,0 +1,13 @@
+---
+- hosts: all
+  remote_user: vagrant
+  vars:
+    backup: True
+  tasks:
+    - name: Copy the crontab in tmp if the backup variable is True
+      copy:
+        src: /etc/crontab
+        dest: /tmp/crontab
+        remote_src: True
+      # If variable is not set, default is False
+      when: backup
