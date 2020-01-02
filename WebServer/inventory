@@ -2,5 +2,8 @@
 web01.clivetw.club admin=clive
 web02.clivetw.club admin=chihwei
 
+[webserver:vars]
+https_enabled=True
+
 [database]
 db01.clivetw.club
