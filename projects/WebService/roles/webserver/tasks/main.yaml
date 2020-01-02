@@ -34,9 +34,3 @@
     dest: /etc/httpd/conf.d
   become: True
   notify: Restart HTTPd
-ndlers:
-- name: Restart HTTPd
-  service:
-    name: httpd
-    state: restarted
-  become: True
