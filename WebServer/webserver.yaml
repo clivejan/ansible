@@ -13,17 +13,13 @@
         state: started
         enabled: True
       become: True
-    - name: Ensure HTTP can pass the firewall
+    - name: Ensure HTTP and HTTPs can pass the firewall
       firewalld:
-        service: http
+        service: '{{ item }}'
         state: enabled
         permanent: True
         immediate: True
       become: True
-    - name: Ensure HTTPS can pass the firewall
-      firewalld:
-        service: https
-        state: enabled
-        permanent: True
-        immediate: True
-      become: True
+      with_items:
+        - http
+        - https
