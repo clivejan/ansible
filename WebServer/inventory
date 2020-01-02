@@ -1,1 +1,6 @@
-test01.clivetw.club
+[webserver]
+web01.clivetw.club
+web02.clivetw.club
+
+[database]
+db01.clivetw.club
