@@ -1,0 +1,17 @@
+---
+- hosts: web01.clivetw.club
+  remote_user: ansible
+  tasks:
+    - name: Stop the HTTPd service
+      service:
+        name: httpd
+        state: stopped
+      become: True
+    - name: Wait for 60 seconds
+      pause:
+        seconds: 60
+    - name: Start the HTTPd service
+      service:
+        name: httpd
+        state: started
+      become: True
