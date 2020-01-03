@@ -20,3 +20,48 @@
         tags:
           Name: ansible_subnet_2a
       register: ansible_subnet_2a
+    - name: Ensure SSH Security Groups is present
+      ec2_group:
+        name: ansible_ssh
+        description: ansible_ssh
+        region: us-east-2
+        vpc_id: "{{ ansible_vpc.vpc.id }}"
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 206.180.252.20/32
+        rules_egress:
+          - proto: all
+            cidr_ip: 0.0.0.0/0
+      register: ansible_ssh
+    - name: Ensure HTTP Security Group is present
+      ec2_group:
+        name: ansible_web
+        description: ansible_web
+        region: us-east-2
+        vpc_id: "{{ ansible_vpc.vpc.id }}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 206.180.252.20/32
+        rules_egress:
+          - proto: all
+            cidr_ip: 0.0.0.0/0
+      register: ansible_web
+    - name: Ensure MySQL Security Group is present
+      ec2_group:
+        name: ansible_db
+        description: ansible_db
+        region: us-east-2
+        vpc_id: "{{ ansible_vpc.vpc.id }}"
+        rules:
+          - proto: tcp
+            from_port: 3306
+            to_port: 3306
+            group_id: "{{ ansible_web.group_id }}"
+        rules_egress:
+          - proto: all
+            cidr_ip: 0.0.0.0/0
+      register: ansible_db
