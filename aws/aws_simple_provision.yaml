@@ -65,3 +65,20 @@
           - proto: all
             cidr_ip: 0.0.0.0/0
       register: ansible_db
+    - name: Ensure that the VPC has an Internet Gateway
+      ec2_vpc_igw:
+        vpc_id: "{{ ansible_vpc.vpc.id }}"
+        state: present
+      register: ansible_igw
+    - name: Ensure publuc subnet has a route to IGW
+      ec2_vpc_route_table:
+        vpc_id: "{{ ansible_vpc.vpc.id }}"
+        region: us-east-2
+        tags:
+          Name: ansible_route_public
+        subnets:
+          - "{{ ansible_subnet_2a.subnet.id }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ ansible_igw.gateway_id }}"
+      register: ansible_route_public
