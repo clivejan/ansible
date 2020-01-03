@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Read the machine uptime
+      command: uptime -p
+      register: uptime
+    - name: Send tje uptime via e-mail
+      mail:
+        host: ansible.clivetw.club
+        #username: 
+        #password:
+        to: root@ansible.clivetw.club
+        subject: Ansible-report
+        body: "Local system uptime is {{ uptime.stdout }}"
+        #attach:
