@@ -82,3 +82,32 @@
           - dest: 0.0.0.0/0
             gateway_id: "{{ ansible_igw.gateway_id }}"
       register: ansible_route_public
+    - name: Setup Web instance
+      ec2:
+        assign_public_ip: "{{ item.public_ip }}"
+        image: ami-0ecb27a764b5327e9
+        region: us-east-2
+        exact_count: 1
+        key_name: default
+        count_tag:
+          Name: "{{ item.name }}"
+        instance_tags:
+          Name: "{{ item.name }}"
+        instance_type: t2.micro
+        group_id: "{{ item.group_id }}"
+        vpc_subnet_id: "{{ ansible_subnet_2a.subnet.id }}"
+        volumes:
+          - device_name: /dev/sda1
+            volume_type: gp2
+            volume_size: 8
+            delete_on_termination: True
+      register: ansible_web_instance
+      with_items:
+          - name: web
+            group_id:
+              - "{{ ansible_ssh.group_id }}"
+              - "{{ ansible_web.group_id }}"
+            public_ip: True
+          - name: db
+            group_id: "{{ ansible_db.group_id }}"
+            public_ip: True
