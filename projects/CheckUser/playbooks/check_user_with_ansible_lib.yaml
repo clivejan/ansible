@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+    user_ok: root
+    user_ko: twice
+  tasks:
+    - name: "Check if user {{user_ok}} exists"
+      check_user_with_ansible_lib:
+        user: "{{user_ok}}"
+    - name: "Check if user {{user_ko}} exists"
+      check_user_with_ansible_lib:
+        user: "{{user_ko}}"
