@@ -11,15 +11,42 @@
         cidr_block: 172.16.0.0/16
         region: us-east-2
       register: ansible_vpc
-    - name: Ensure the VPC subnetwork is present
+    - name: Ensure the VPC subnetwork public 2a is present
       ec2_vpc_subnet:
         state: present
         az: us-east-2a
         vpc_id: "{{ ansible_vpc.vpc.id }}"
         cidr: 172.16.11.0/24
         tags:
-          Name: ansible_subnet_2a
-      register: ansible_subnet_2a
+          Name: ansible_subnet_public_2a
+      register: ansible_subnet_public_2a
+    - name: Ensure the VPC subnetwork public 2b is present
+      ec2_vpc_subnet:
+        state: present
+        az: us-east-2b
+        vpc_id: "{{ ansible_vpc.vpc.id }}"
+        cidr: 172.16.12.0/24
+        tags:
+          Name: ansible_subnet_public_2b
+      register: ansible_subnet_public_2b
+    - name: Ensure the VPC subnetwork private 2a is present
+      ec2_vpc_subnet:
+        state: present
+        az: us-east-2a
+        vpc_id: "{{ ansible_vpc.vpc.id }}"
+        cidr: 172.16.21.0/24
+        tags:
+          Name: ansible_subnet_private_2a
+      register: ansible_subnet_private_2a
+    - name: Ensure the VPC subnetwork private 2b is present
+      ec2_vpc_subnet:
+        state: present
+        az: us-east-2b
+        vpc_id: "{{ ansible_vpc.vpc.id }}"
+        cidr: 172.16.22.0/24
+        tags:
+          Name: ansible_subnet_private_2b
+      register: ansible_subnet_private_2b
     - name: Ensure SSH Security Groups is present
       ec2_group:
         name: ansible_ssh
@@ -77,7 +104,8 @@
         tags:
           Name: ansible_route_public
         subnets:
-          - "{{ ansible_subnet_2a.subnet.id }}"
+          - "{{ ansible_subnet_public_2a.subnet.id }}"
+          - "{{ ansible_subnet_public_2b.subnet.id }}"
         routes:
           - dest: 0.0.0.0/0
             gateway_id: "{{ ansible_igw.gateway_id }}"
@@ -95,7 +123,7 @@
           Name: "{{ item.name }}"
         instance_type: t2.micro
         group_id: "{{ item.group_id }}"
-        vpc_subnet_id: "{{ ansible_subnet_2a.subnet.id }}"
+        vpc_subnet_id: "{{ ansible_subnet_public_2a.subnet.id }}"
         volumes:
           - device_name: /dev/sda1
             volume_type: gp2
