@@ -123,7 +123,7 @@
           Name: "{{ item.name }}"
         instance_type: t2.micro
         group_id: "{{ item.group_id }}"
-        vpc_subnet_id: "{{ ansible_subnet_public_2a.subnet.id }}"
+        vpc_subnet_id: "{{ item.subnet_id }}"
         volumes:
           - device_name: /dev/sda1
             volume_type: gp2
@@ -131,11 +131,19 @@
             delete_on_termination: True
       register: ansible_web_instance
       with_items:
-          - name: web
+          - name: web01
+            subnet_id: "{{ ansible_subnet_public_2a.subnet.id }}"
+            group_id:
+              - "{{ ansible_ssh.group_id }}"
+              - "{{ ansible_web.group_id }}"
+            public_ip: True
+          - name: web02
+            subnet_id: "{{ ansible_subnet_public_2b.subnet.id }}"
             group_id:
               - "{{ ansible_ssh.group_id }}"
               - "{{ ansible_web.group_id }}"
             public_ip: True
           - name: db
+            subnet_id: "{{ ansible_subnet_private_2a.subnet.id }}"
             group_id: "{{ ansible_db.group_id }}"
-            public_ip: True
+            public_ip: False
