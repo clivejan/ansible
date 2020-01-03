@@ -1,0 +1,22 @@
+- hosts: localhost
+  tasks:
+    - name: Ensure key pair is present
+      ec2_key:      
+        name: default
+        key_material: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    - name: Ensure VPC network is present
+      ec2_vpc_net:
+        name: ansible_vpc
+        state: present
+        cidr_block: 172.16.0.0/16
+        region: us-east-2
+      register: ansible_vpc
+    - name: Ensure the VPC subnetwork is present
+      ec2_vpc_subnet:
+        state: present
+        az: us-east-2a
+        vpc_id: "{{ ansible_vpc.vpc.id }}"
+        cidr: 172.16.11.0/24
+        tags:
+          Name: ansible_subnet_2a
+      register: ansible_subnet_2a
