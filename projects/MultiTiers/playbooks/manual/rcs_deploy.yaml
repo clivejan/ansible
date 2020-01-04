@@ -1,0 +1,13 @@
+- hosts: web
+  user: vagrant
+  tasks:
+    - name: Ensure git is installed
+      yum:
+        name: git
+        state: present
+      become: True
+    - name: Install or update website content
+      git:
+        repo: https://github.com/clivejan/demo-web-for-ansible.git
+        dest: /var/www/application
+      become: True
