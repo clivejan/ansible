@@ -1,0 +1,5 @@
+---
+- hosts: test01.clivetw.club
+  user: vagrant
+  roles:
+    - java
