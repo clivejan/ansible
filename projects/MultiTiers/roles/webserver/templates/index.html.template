@@ -1,0 +1,17 @@
+<html>
+	<body>
+		<h1>Hello World!</h1>
+		<p>This page was create on {{ ansible_date_time.date }}.</p>
+<!--
+		{% if ansible_eth0.active == True %}
+			<p>eth0 address {{ ansible_eth0.ipv4.address }}.</p>
+		{% endif %}
+-->
+		<p>This machine can be reached on the following IP addresses</p>
+		<ul>
+			{% for address in ansible_all_ipv4_addresses %}
+				<li>{{ address }}</li>
+			{% endfor %}
+		</ul>
+	</body>
+</html>
