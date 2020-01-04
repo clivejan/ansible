@@ -1,0 +1,9 @@
+[web]
+wb01.staging.clivetw.club
+
+[db]
+db01.staging.clivetw.club
+
+[staging:children]
+web
+db

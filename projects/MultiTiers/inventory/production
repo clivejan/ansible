@@ -1,0 +1,9 @@
+[web]
+wb01.clivetw.club
+
+[db]
+db01.clivetw.club
+
+[production:children]
+web
+db

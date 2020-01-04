@@ -1,0 +1,4 @@
+env: production
+domain: clivetw.club
+db_url: db.clivetw.club
+db_pass: this_is_db_password

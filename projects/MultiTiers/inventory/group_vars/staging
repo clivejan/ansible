@@ -1,0 +1,4 @@
+env: staging
+domain: staging.clivetw.club
+db_url: db.staging.clivetw.club
+db_pass: this_is_staging_db_password
